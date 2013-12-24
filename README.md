@@ -11,7 +11,7 @@ The first hitch came about upon running composer create project, when it failed 
 
 For some reason mcrypt.ini gets installed to /etc/php5/conf.d/ instead of direcly into /etc/php5/mods-available/, so never get loaded. To fix:
 
-```php
+```bash
 cd <project-name>
 php composer update --no-scripts
 sudo ln -s /etc/php5/conf.d/mcrypt.ini /etc/php5/mods-available/mcrypt.ini  # to put it where the laravel scripts will look for it
