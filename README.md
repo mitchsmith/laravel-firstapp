@@ -11,6 +11,7 @@ The first hitch came about upon running composer create project, when it failed 
 
 For some reason mcrypt.ini gets installed to /etc/php5/conf.d/ instead of direcly into /etc/php5/mods-available/, so never get loaded. To fix:
 
+```php
 cd <project-name>
 php composer update --no-scripts
 sudo ln -s /etc/php5/conf.d/mcrypt.ini /etc/php5/mods-available/mcrypt.ini  # to put it where the laravel scripts will look for it
@@ -19,6 +20,7 @@ sudo ln -s /etc/php5/mods-available/mcrypt.ini /etc/php5/cli/conf.d/20-mcrypt.in
 sudo php5enmod mcrypt # enable mod mcrypt
 php composer update # to re-run the laravel init scripts
 sudo service apache2 restart
+```
 
 The second hitch came about from my decision to install using composer create-project rather than using the laravel installer .phar file. The instructions on this page under "Install Laravel", unlike those in the Quickstart guide, leave out the <project-name> argument, so what I ended up with at first is a project called laravel, with a sibling vendor folder at the same level, loose in the root of my php-projects folder.
 
