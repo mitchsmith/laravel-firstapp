@@ -15,3 +15,12 @@ Route::get('/', function()
 {
 	return View::make('hello');
 });
+
+/*
+| In Laravel, the simplest route is a route to a Closure:
+ */
+
+Route::get('users', function()
+{
+	return 'Users!';
+});
