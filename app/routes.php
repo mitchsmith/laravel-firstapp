@@ -36,6 +36,6 @@ Route::get('users', function()
 });
 
 /* Here's the same thing using a controller instead. */
-Route::any('users', 'ListController@userList');
+Route::any('users', 'UserController@getIndex');
 
-Route::get('user/{slug?}', 'DetailController@userDetail');
+Route::get('user/{slug?}', 'UserController@getUser');

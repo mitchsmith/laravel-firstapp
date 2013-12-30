@@ -1,8 +1,8 @@
-<!doctype html>`
+<!doctype html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>User Detail</title>
+	<title>Laravel Quickstart</title>
 	<style>
 		@import url(//fonts.googleapis.com/css?family=Lato:700);
 
@@ -34,9 +34,6 @@
 	</style>
 </head>
 <body>
-	<div class="welcome">
-	<h1>This is where you will one day find details about user <?php echo $slug ?>.</h1>
-		<p></p>
-	</div>
+	@yield('content');
 </body>
 </html>
