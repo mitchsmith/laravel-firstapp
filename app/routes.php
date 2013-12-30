@@ -36,6 +36,23 @@ Route::get('users', function()
 });
 
 /* Here's the same thing using a controller instead. */
-Route::any('users', 'UserController@getIndex');
 
-Route::get('user/{slug?}', 'UserController@getUser');
+Route::any('users', 'UserController@index');
+
+Route::get('users/{slug?}', 'UserController@show');
+/* */
+
+/* Spelling out crud op/route mapping by hand here is clear, but seems
+|  like it could get unwieldy:
+|----------------------------------------------------------------------
+|mitch@Filmore:~/Projects/php-projects/laravel-firstapp$ php artisan routes
++--------+-------------------+-------------------+----------------------------+----------------+---------------+
+| Domain | URI               | Name              | Action                     | Before Filters | After Filters |
++--------+-------------------+-------------------+----------------------------+----------------+---------------+
+|        | GET /             |                   | HomeController@showWelcome |                |               |
+|        | GET users         |                   | UserController@index       |                |               |
+|        | GET users/{slug?} |                   | UserController@show        |                |               |
++--------+-------------------+-------------------+----------------------------+----------------+---------------+
+*/
+
+

@@ -1,5 +1,12 @@
 <?php
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
+App::error(function(ModelNotFoundException $e)
+{
+	return Response::make('Not Found', 404);
+});
+
 class UserController extends BaseController {
 
 	/*
@@ -10,15 +17,18 @@ class UserController extends BaseController {
 	|
 	*/
 
-	public function getIndex()
+	public function index()
 	{
 		$users = User::all();
 		return View::make('users')->with('users', $users);
 	}
 
 
-	public function getUser($slug = 'test_user')
+	public function show($slug = Null)
 	{
-		return View::make('user', array('slug' => $slug));
+		$user = User::where('name','LIKE',$slug)->firstOrFail();
+		return View::make('user', array('slug' => $slug, 'user' => $user));
 	}
+	
+	
 } 
