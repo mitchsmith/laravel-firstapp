@@ -1,8 +1,11 @@
 @extends('layout')
 
+<div>
+	<h1>List of Users</h1>
+	<p></p>
 @section('content')
-<div class="welcome">
-	<h1>This is where you will soon find a list of users.</h1>
-	<p>(blade version)</p>
+    @foreach($users as $user)
+        <p>{{ $user->name }}</p>
+    @endforeach
 </div>
 @stop
