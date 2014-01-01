@@ -55,7 +55,7 @@ Route::get('users/{slug?}', 'UserController@show');
 +--------+-------------------+-------------------+----------------------------+----------------+---------------+
 */
 
-Route::resource('users', 'UserController');
+Route::resource('user', 'UserController');
 /*	                array('only' => array('index', 'show'))); */
 
 /* Route::Resource() gives a complete Rails-lise set of CRUD routes, a subset of which can be chosen with the "only" param:
