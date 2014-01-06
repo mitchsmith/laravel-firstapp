@@ -18,7 +18,7 @@ Route::get('/', function()
  */
 
 /* Controller based route */
-Route::get('/', 'HomeController@showWelcome');
+Route::get('/', array('as' => 'home', 'uses' => 'HomeController@showWelcome'));
 
 /*
 | In Laravel, the simplest route is a route to a Closure:
@@ -55,29 +55,39 @@ Route::get('users/{slug?}', 'UserController@show');
 +--------+-------------------+-------------------+----------------------------+----------------+---------------+
 */
 
-Route::resource('user', 'UserController');
-/*	                array('only' => array('index', 'show'))); */
+/* Route::resource('user', 'UserController');
+	                array('only' => array('index', 'show'))); */
 
-/* Route::Resource() gives a complete Rails-lise set of CRUD routes, a subset of which can be chosen with the "only" param:
+/* Route::Resource() gives a complete Rails-like set of CRUD routes, a subset of which can be chosen with the "only" param,
+ * but, it's a bit odd because it sure seems like the route to user.store ought to be "POST user/{user}" right?
 | -------------------------------------------------------------------------------------------------------------------------
-| mitch@Filmore:~/Projects/php-projects/laravel-firstapp$ php artisan routes
-+--------+------------------------+---------------------+----------------------------+----------------+---------------+
-| Domain | URI                    | Name                | Action                     | Before Filters | After Filters |
-+--------+------------------------+---------------------+----------------------------+----------------+---------------+
-|        | GET /                  |                     | HomeController@showWelcome |                |               |
-|        | GET users              | users.index         | UserController@index       |                |               |
-|        | GET users/create       | users.create        | UserController@create      |                |               |
-|        | POST users             | users.store         | UserController@store       |                |               |
-|        | GET users/{users}      | users.show          | UserController@show        |                |               |
-|        | GET users/{users}/edit | users.edit          | UserController@edit        |                |               |
-|        | PUT users/{users}      | users.update        | UserController@update      |                |               |
-|        | PATCH users/{users}    |                     | UserController@update      |                |               |
-|        | DELETE users/{users}   | users.destroy       | UserController@destroy     |                |               |
-+--------+------------------------+---------------------+----------------------------+----------------+---------------+
+| mitch@Filmore:~/Projects/php-projects/laravel-firstapp$ php artisan route
++--------+----------------------+-------------------+----------------------------+----------------+---------------+
+| Domain | URI                  | Name              | Action                     | Before Filters | After Filters |
++--------+----------------------+-------------------+----------------------------+----------------+---------------+
+|        | GET /                |                   | HomeController@showWelcome |                |               |
+|        | GET user             | user.index        | UserController@index       |                |               |
+|        | GET user/create      | user.create       | UserController@create      |                |               |
+|        | POST user            | user.store        | UserController@store       |                |               |
+|        | GET user/{user}      | user.show         | UserController@show        |                |               |
+|        | GET user/{user}/edit | user.edit         | UserController@edit        |                |               |
+|        | PUT user/{user}      | user.update       | UserController@update      |                |               |
+|        | PATCH user/{user}    |                   | UserController@update      |                |               |
+|        | DELETE user/{user}   | user.destroy      | UserController@destroy     |                |               |
++--------+----------------------+-------------------+----------------------------+----------------+---------------+
 |
 |  There is also a Route::Controller() method with a good explanation of it here:
 |  http://stackoverflow.com/questions/18402298/laravel-4-defining-restful-controllers
 |  which references an article by Phil Sturgeon, advocating building routes by hand here:
 |  http://philsturgeon.co.uk/blog/2013/07/beware-the-route-to-evil
  */
+Route::get('user', array('as' => 'user.index', 'uses' => 'UserController@index'));
+Route::get('user/create', array('as' => 'user.create', 'uses' => 'UserController@create'));
+Route::get('user/{id}', array('as' => 'user.show', 'uses' => 'UserController@show'));
+Route::post('user/{id}', array('as' => 'user.store', 'uses' => 'UserController@store'));
+Route::get('user/{id}/edit', array('as' => 'user.edit', 'uses' => 'UserController@edit'));
+Route::put('user/{id}', array('as' => 'user.update', 'uses' => 'UserController@update'));
+Route::patch('user/{id}', 'UserController@update');
+Route::delete('user/{id}', array('as' => 'user.destroy', 'uses' => 'UserController@destroy'));
+
 
