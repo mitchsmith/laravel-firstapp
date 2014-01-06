@@ -96,3 +96,4 @@ Route::delete('user/{id}', array('as' => 'user.destroy', 'uses' => 'UserControll
 Route::any('login', array('as' => 'user.login', 'uses' => 'UserController@loginAction'));
 Route::any('request-password-reset', array('as' => 'user.request', 'uses' => 'UserController@requestAction'));
 Route::any('reset-password', array("as" => 'user.reset', 'uses' => 'UserController@resetAction'));
+Route::any('user/{id}/profile', array('as' => 'user.profile', 'uses' => 'UserController@profileAction'));
