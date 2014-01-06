@@ -12,11 +12,37 @@ class CreateUserTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('user', function(Blueprint $table)
+		Schema::create("user", function(Blueprint $table)
 		{
-			//
+			$table->increments("id");
+
+			$table
+				->string("username")
+				->nullable()
+		                ->default(null);
+
+			$table
+				->string("password")
+				->nullable()
+				->default(null);
+
+			$table
+				->string("email")
+				->nullable()
+				->default(null);
+
+			$table
+				->dateTime("created_at")
+				->nullable()
+				->default(null);
+
+			$table
+				->dateTime("updated_at")
+				->nullable()
+				->default(null);
 		});
 	}
+
 
 	/**
 	 * Reverse the migrations.
@@ -25,10 +51,7 @@ class CreateUserTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('user', function(Blueprint $table)
-		{
-			//
-		});
+		Schema::dropIfExists("user");
 	}
 
 }

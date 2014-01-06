@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\MessageBag;
 
 App::error(function(ModelNotFoundException $e)
 {
@@ -25,21 +26,22 @@ class UserController extends BaseController {
 	|
 	*/
 
+	/* Standard REST API to User */
 	public function index()
 	{
 		$users = User::all();
-		return View::make('users')->with('users', $users);
+		return View::make('user/users')->with('users', $users);
 	}
 
 	public function create()
 	{
-		return View::make('create_user_form'); //->with('user', $user);
+		return View::make('user/create_user_form'); //->with('user', $user);
 	}
 
 	public function show($id = Null)
 	{
 		$user = User::find($id);
-		return View::make('user', array('user' => $user));
+		return View::make('user/user', array('user' => $user));
 	}
 	
 	public function store()
@@ -56,7 +58,7 @@ class UserController extends BaseController {
 	public function edit($id)
 	{
 		$user = User::where('id', '=', $id)->firstOrFail();
-		return View::make('update_user_form')->with('user', $user);
+		return View::make('user/update_user_form')->with('user', $user);
 	}
 
 	public function update($id)
@@ -66,4 +68,50 @@ class UserController extends BaseController {
 		return Redirect::route('user.index')->with('flash', 'The new user has been updated.');
 	}
 
-} 
+	/* Additional User Actions */
+	public function loginAction()
+	{
+ 		$errors = new MessageBag();
+
+         	if ($old = Input::old("errors"))
+		{
+			$errors = $old;
+		}
+
+		$data = [
+			"errors" => $errors
+		];
+
+		if (Input::server("REQUEST_METHOD") == "POST")
+		{
+			$validator = Validator::make(Input::all(), [
+				"username" => "required",
+				"password" => "required"
+			]);
+
+			if ($validator->passes())
+			{
+				$credentials = [
+					"username" => Input::get("username"),
+					"password" => Input::get("password")
+				];
+
+				 if (Auth::attempt($credentials))
+				 {
+				 	return Redirect::route("user.profile");
+				 }
+			}
+
+			$data["errors"] = new MessageBag([
+				"password" => ["Invalid username or password."]
+			]);
+
+			$data["username"] = Input::get("username");
+
+			return Redirect::route("user.login")->withInput($data);
+		}
+
+		return View::make("user/login_form", $data);
+	}
+
+}

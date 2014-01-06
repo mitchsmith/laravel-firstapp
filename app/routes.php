@@ -81,6 +81,8 @@ Route::get('users/{slug?}', 'UserController@show');
 |  which references an article by Phil Sturgeon, advocating building routes by hand here:
 |  http://philsturgeon.co.uk/blog/2013/07/beware-the-route-to-evil
  */
+
+/* Standard REST API to User */
 Route::get('user', array('as' => 'user.index', 'uses' => 'UserController@index'));
 Route::get('user/create', array('as' => 'user.create', 'uses' => 'UserController@create'));
 Route::get('user/{id}', array('as' => 'user.show', 'uses' => 'UserController@show'));
@@ -90,4 +92,7 @@ Route::put('user/{id}', array('as' => 'user.update', 'uses' => 'UserController@u
 Route::patch('user/{id}', 'UserController@update');
 Route::delete('user/{id}', array('as' => 'user.destroy', 'uses' => 'UserController@destroy'));
 
-
+/* Additional User Actions */
+Route::any('login', array('as' => 'user.login', 'uses' => 'UserController@loginAction'));
+Route::any('request-password-reset', array('as' => 'user.request', 'uses' => 'UserController@requestAction'));
+Route::any('reset-password', array("as" => 'user.reset', 'uses' => 'UserController@resetAction'));
