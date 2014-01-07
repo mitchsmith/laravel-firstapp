@@ -93,7 +93,15 @@ Route::patch('user/{id}', 'UserController@update');
 Route::delete('user/{id}', array('as' => 'user.destroy', 'uses' => 'UserController@destroy'));
 
 /* Additional User Actions */
-Route::any('login', array('as' => 'user.login', 'uses' => 'UserController@loginAction'));
-Route::any('request-password-reset', array('as' => 'user.request', 'uses' => 'UserController@requestAction'));
-Route::any('reset-password', array("as" => 'user.reset', 'uses' => 'UserController@resetAction'));
-Route::any('user/{id}/profile', array('as' => 'user.profile', 'uses' => 'UserController@profileAction'));
+Route::group(["before" => "guest"], function()
+{
+	Route::any('login', array('as' => 'user.login', 'uses' => 'UserController@loginAction'));
+	Route::any('request-password-reset', array('as' => 'user.request', 'uses' => 'UserController@requestAction'));
+	Route::any('reset-password', array("as" => 'user.reset', 'uses' => 'UserController@resetAction'));
+});
+
+Route::group(["before" => "auth"], function()
+{
+	Route::any('profile', array('as' => 'user.profile', 'uses' => 'UserController@profileAction'));
+	Route::any('lofout', array('as' => 'user.logout', 'uses' => 'UserController@logoutAction'));
+});

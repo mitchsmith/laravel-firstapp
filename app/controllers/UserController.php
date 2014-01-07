@@ -115,7 +115,13 @@ class UserController extends BaseController {
 
 		return View::make("user/login_form", $data);
 	}
-
+	
+	/* User Logout  */
+	public function logoutAction()
+	{
+		Auth::logout();
+		return Redirect::route("user.login");
+	}
 
 	/* Request a password reset */
 	public function requestAction()
@@ -211,4 +217,6 @@ class UserController extends BaseController {
 	{
 		return View::make("user/profile");
 	}
+
+
 }

@@ -47,6 +47,8 @@
 	</style>
 </head>
 <body>
+	@include("header");
+
 	@yield('content');
 </body>
 </html>
